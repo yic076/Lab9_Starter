@@ -87,7 +87,24 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "f9b8e6aaece34f778e6b4925273b94e5"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                        
+                          
+
+  <script>
+  class CalculationError extends Error {
+    constructor(message) {
+      super(message); 
+      this.name = "CalculationError"; 
+    }
+  }
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -95,13 +112,95 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
-    });
+
+      try {
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      } catch (error) {
+        console.log("Unfortunately, you've got an error") 
+        throw new CalculationError("The arguments aren't numbers")
+      }
+      });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+    let button0 = errorBtns[0]
+    button0.addEventListener('click',()=>{
+      console.log("Console Log Demo")
+    })
+    let button1 = errorBtns[1]
+    button1.addEventListener('click',()=>{
+      console.error("Console Error Demo")
+    })
+    let button2 = errorBtns[2]
+    button2.addEventListener('click',()=>{
+      console.count("Count Button")
+    })
+    let button3 = errorBtns[3]
+    button3.addEventListener('click',()=>{
+      console.warn("Console Warn Button")
+    })
+    let button4 = errorBtns[4]
+    button4.addEventListener('click',()=>{
+      let number = 1
+      let errorMsg = "The number does not equal 2"
+      console.assert(number === 2,  'Number %o', { number, errorMsg});
+    })
+    let button5 = errorBtns[5]
+    button5.addEventListener('click',()=>{
+      console.clear()
+    })
+    let button6 = errorBtns[6]
+    button6.addEventListener('click',()=>{
+      console.dir(button6)
+    })
+    let button7 = errorBtns[7]
+    button7.addEventListener('click',()=>{
+      console.dirxml(button7)
+    })
+    let button8 = errorBtns[8]
+    button8.addEventListener('click',()=>{
+      console.group()
+    })
+    let button9 = errorBtns[9]
+    button9.addEventListener('click',()=>{
+      console.groupEnd()
+    })
+    let button10 = errorBtns[10]
+    button10.addEventListener('click',()=>{
+      console.table([{firstname:"John", lastname:"Smith"}, {firstname:"The",lastname:"Guy"}]);
+    })
+    let button11 = errorBtns[11]
+    button11.addEventListener('click',()=>{
+      console.time(); 
+    })
+    let button12 = errorBtns[12]
+    button12.addEventListener('click',()=>{
+      console.timeEnd(); 
+    })
+    let button13 = errorBtns[13]
+    button13.addEventListener('click',()=>{
+      deep()
+    })
+    function deep(){
+      deeper()
+    }
+    function deeper(){
+      deepest()
+    }
+    function deepest(){
+      console.trace()
+    }
+    let button14 = errorBtns[14]
+    button14.addEventListener('click',()=>{
+      let num = one + 2;
+    })
+
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.log('This error was caught by onerror', message);
+      return true;
+    }
   </script>
 </body>
 
